@@ -169,8 +169,8 @@ async def contact_create_form(request: Request):
 @router.post("/kontakty/nowy")
 async def contact_create(
     request: Request,
-    imie: str = Form(..., description="Imię"),
-    nazwisko: str = Form(..., description="Nazwisko"),
+    imie: str = Form("", description="Imię lub nazwa"),
+    nazwisko: str = Form("", description="Nazwisko"),
     numer_wewnetrzny: str = Form(..., description="Numer wewnętrzny"),
     dzial: str = Form("", description="Dział"),
     firma: str = Form("", description="Firma"),
@@ -216,8 +216,8 @@ async def contact_create(
     
     # Stwórz kontakt
     contact = Contact(
-        imie=imie.strip(),
-        nazwisko=nazwisko.strip(),
+        imie=imie.strip() if imie.strip() else None,
+        nazwisko=nazwisko.strip() if nazwisko.strip() else None,
         numer_wewnetrzny=numer_wewnetrzny.strip(),
         dzial=dzial.strip() if dzial.strip() else None,
         firma=firma.strip() if firma.strip() else None,
@@ -246,11 +246,18 @@ async def contact_detail(
     
     user = get_current_user(request)
     
+    # Przygotuj tytuł strony
+    contact_name = ""
+    if contact.imie or contact.nazwisko:
+        contact_name = f"{contact.imie or ''} {contact.nazwisko or ''}".strip()
+    else:
+        contact_name = "Kontakt bez nazwy"
+    
     return templates.TemplateResponse(
         "contacts/detail.html",
         {
             "request": request,
-            "title": f"{contact.imie} {contact.nazwisko} - Książka Telefoniczna",
+            "title": f"{contact_name} - Książka Telefoniczna",
             "contact": contact,
             "user": user
         }
@@ -275,11 +282,16 @@ async def contact_edit_form(
     if not contact:
         raise HTTPException(status_code=404, detail="Kontakt nie został znaleziony")
     
+    # Przygotuj tytuł strony
+    contact_name = ""
+    if contact.imie or contact.nazwisko:
+        contact_name = f" {contact.imie or ''} {contact.nazwisko or ''}".strip()
+    
     return templates.TemplateResponse(
         "contacts/edit.html",
         {
             "request": request,
-            "title": f"Edytuj {contact.imie} {contact.nazwisko} - Książka Telefoniczna",
+            "title": f"Edytuj{contact_name} - Książka Telefoniczna",
             "contact": contact
         }
     )
@@ -289,8 +301,8 @@ async def contact_edit_form(
 async def contact_edit(
     request: Request,
     contact_id: str,
-    imie: str = Form(..., description="Imię"),
-    nazwisko: str = Form(..., description="Nazwisko"),
+    imie: str = Form("", description="Imię lub nazwa"),
+    nazwisko: str = Form("", description="Nazwisko"),
     numer_wewnetrzny: str = Form(..., description="Numer wewnętrzny"),
     dzial: str = Form("", description="Dział"),
     firma: str = Form("", description="Firma"),
@@ -344,8 +356,8 @@ async def contact_edit(
         )
     
     # Aktualizuj kontakt
-    contact.imie = imie.strip()
-    contact.nazwisko = nazwisko.strip()
+    contact.imie = imie.strip() if imie.strip() else None
+    contact.nazwisko = nazwisko.strip() if nazwisko.strip() else None
     contact.numer_wewnetrzny = numer_wewnetrzny.strip()
     contact.dzial = dzial.strip() if dzial.strip() else None
     contact.firma = firma.strip() if firma.strip() else None

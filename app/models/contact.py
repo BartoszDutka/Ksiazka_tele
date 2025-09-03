@@ -6,8 +6,8 @@ import uuid
 
 class ContactBase(SQLModel):
     """Bazowy model kontaktu z wspólnymi polami"""
-    imie: str = Field(description="Imię kontaktu")
-    nazwisko: str = Field(description="Nazwisko kontaktu")
+    imie: Optional[str] = Field(default=None, description="Imię lub nazwa kontaktu")
+    nazwisko: Optional[str] = Field(default=None, description="Nazwisko kontaktu")
     numer_wewnetrzny: str = Field(
         unique=True, 
         index=True, 

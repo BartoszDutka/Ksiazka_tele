@@ -8,7 +8,7 @@
             <div class="mb-6">
                 <h1 class="text-2xl font-bold text-gray-900">Edytuj kontakt</h1>
                 <p class="mt-1 text-sm text-gray-500">
-                    Modyfikuj dane kontaktu {{ contact.imie }} {{ contact.nazwisko }}
+                    Modyfikuj dane kontaktu{% if contact.imie or contact.nazwisko %} {{ contact.imie or '' }} {{ contact.nazwisko or '' }}{% endif %}
                 </p>
             </div>
 
@@ -17,7 +17,7 @@
                 <!-- Imię -->
                 <div>
                     <label for="imie" class="block text-sm font-medium text-gray-700">
-                        Imię
+                        Imię/Nazwa
                     </label>
                     <div class="mt-1">
                         <input 
@@ -25,9 +25,8 @@
                             id="imie" 
                             name="imie" 
                             value="{{ imie or contact.imie }}"
-                            placeholder="Wprowadź imię"
+                            placeholder="Wprowadź imię lub nazwę"
                             class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                            required
                         >
                     </div>
                     {% if errors and errors.imie %}
@@ -48,7 +47,6 @@
                             value="{{ nazwisko or contact.nazwisko }}"
                             placeholder="Wprowadź nazwisko"
                             class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                            required
                         >
                     </div>
                     {% if errors and errors.nazwisko %}
@@ -67,13 +65,13 @@
                             id="numer_wewnetrzny" 
                             name="numer_wewnetrzny" 
                             value="{{ numer_wewnetrzny or contact.numer_wewnetrzny }}"
-                            placeholder="np. 451"
+                            placeholder="np. 111"
                             class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md {% if errors and errors.numer_wewnetrzny %}border-red-300{% endif %}"
                             required
                         >
                     </div>
                     <p class="mt-1 text-sm text-gray-500">
-                        Wymagane. Numer wewnętrzny firmy.
+                        Wymagane.
                     </p>
                     {% if errors and errors.numer_wewnetrzny %}
                         <p class="mt-2 text-sm text-red-600">{{ errors.numer_wewnetrzny }}</p>
@@ -165,7 +163,7 @@
 <script>
     // Focus na pierwszym polu
     document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('imie').focus();
+        document.getElementById('numer_wewnetrzny').focus();
     });
     
     // Walidacja po stronie klienta

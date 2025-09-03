@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{{ title or "Książka Telefoniczna" }}{% endblock %}</title>
     
-    <!-- Tailwind CSS -->
+    <!-- Favicon -->
+        <link rel="icon" type="image/png" href="/static/logo.png">    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- HTMX -->
@@ -37,8 +38,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <a href="/kontakty" class="flex items-center space-x-2">
-                        <i class="fas fa-address-book text-xl"></i>
+                    <a href="/kontakty" class="flex items-center space-x-3">
+                        <img src="/static/logo.png" alt="Logo Książki Telefonicznej" class="h-8 w-8 object-contain">
                         <span class="text-xl font-bold">Książka Telefoniczna</span>
                     </a>
                 </div>
@@ -90,7 +91,10 @@
     <footer class="bg-gray-800 text-white mt-12">
         <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center">
-                <p class="text-sm">© 2025 Książka Telefoniczna. Wszystkie prawa zastrzeżone.</p>
+                <div class="flex items-center space-x-2">
+                    <img src="/static/logo.png" alt="Logo Książki Telefonicznej" class="h-6 w-6 object-contain">
+                    <p class="text-sm">© 2025 Książka Telefoniczna. Bartosz Dutka. Wszystkie prawa zastrzeżone.</p>
+                </div>
                 <p class="text-sm">
                     <a href="/docs" class="hover:text-gray-300">
                         <i class="fas fa-code mr-1"></i>

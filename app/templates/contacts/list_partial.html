@@ -37,7 +37,11 @@
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-gray-900">
                                             <a href="/kontakty/{{ contact.id }}" class="hover:text-blue-600">
-                                                {{ contact.imie }} {{ contact.nazwisko }}
+                                                {% if contact.imie or contact.nazwisko %}
+                                                    {{ contact.imie or '' }} {{ contact.nazwisko or '' }}
+                                                {% else %}
+                                                    Kontakt bez nazwy
+                                                {% endif %}
                                             </a>
                                         </div>
                                         {% if contact.notatki %}
@@ -77,7 +81,7 @@
                                         </a>
                                         <button 
                                             type="button"
-                                            onclick="deleteContact('{{ contact.id }}', '{{ contact.imie }} {{ contact.nazwisko }}')"
+                                            onclick="deleteContact('{{ contact.id }}', '{% if contact.imie or contact.nazwisko %}{{ contact.imie or '' }} {{ contact.nazwisko or '' }}{% else %}kontakt bez nazwy{% endif %}')"
                                             class="text-red-600 hover:text-red-900" 
                                             title="Usuń"
                                         >
