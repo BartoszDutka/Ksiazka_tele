@@ -12,7 +12,56 @@
             </p>
         </div>
         {% if user %}
-            <div class="mt-4 sm:mt-0">
+            <div class="mt-4 sm:mt-0 flex items-center space-x-3">
+                <!-- Export dropdown -->
+                <div class="relative">
+                    <button 
+                        id="export-dropdown-button"
+                        type="button" 
+                        class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md shadow-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        onclick="toggleExportDropdown()"
+                    >
+                        <i class="fas fa-download mr-2"></i>
+                        Eksport
+                        <i class="fas fa-chevron-down ml-2"></i>
+                    </button>
+                    
+                    <div 
+                        id="export-dropdown" 
+                        class="hidden absolute right-0 z-10 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5"
+                    >
+                        <div class="py-1" role="menu">
+                            <a 
+                                href="#" 
+                                onclick="exportContacts('csv')"
+                                class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                role="menuitem"
+                            >
+                                <i class="fas fa-file-csv mr-3 text-green-500"></i>
+                                Plik CSV
+                            </a>
+                            <a 
+                                href="#" 
+                                onclick="exportContacts('excel')"
+                                class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                role="menuitem"
+                            >
+                                <i class="fas fa-file-excel mr-3 text-green-600"></i>
+                                Plik Excel
+                            </a>
+                            <a 
+                                href="#" 
+                                onclick="exportContacts('pdf')"
+                                class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                role="menuitem"
+                            >
+                                <i class="fas fa-file-pdf mr-3 text-red-500"></i>
+                                Plik PDF
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
                 <a href="/kontakty/nowy" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-700 dark:hover:bg-blue-800">
                     <i class="fas fa-plus mr-2"></i>
                     Nowy kontakt
@@ -121,5 +170,56 @@
             searchInput.focus();
         }
     });
+    
+    // Export dropdown functionality
+    function toggleExportDropdown() {
+        const dropdown = document.getElementById('export-dropdown');
+        dropdown.classList.toggle('hidden');
+    }
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById('export-dropdown');
+        const button = document.getElementById('export-dropdown-button');
+        
+        if (!dropdown.contains(event.target) && !button.contains(event.target)) {
+            dropdown.classList.add('hidden');
+        }
+    });
+    
+    // Export functions
+    function exportContacts(format) {
+        // Get current filters
+        const urlParams = new URLSearchParams(window.location.search);
+        const q = urlParams.get('q') || '';
+        const dzial = urlParams.get('dzial') || '';
+        
+        // Build export URL
+        let exportUrl = `/kontakty/export/${format}?`;
+        const params = new URLSearchParams();
+        
+        if (q) params.append('q', q);
+        if (dzial) params.append('dzial', dzial);
+        
+        exportUrl += params.toString();
+        
+        // Close dropdown
+        document.getElementById('export-dropdown').classList.add('hidden');
+        
+        // Show loading indicator
+        const button = document.getElementById('export-dropdown-button');
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Eksportowanie...';
+        button.disabled = true;
+        
+        // Download file
+        window.location.href = exportUrl;
+        
+        // Reset button after delay
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.disabled = false;
+        }, 2000);
+    }
 </script>
 {% endblock %}
