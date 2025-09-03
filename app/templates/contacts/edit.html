@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="bg-white shadow rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+            <!-- Header -->
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">Edytuj kontakt</h1>
+                <p class="mt-1 text-sm text-gray-500">
+                    Modyfikuj dane kontaktu {{ contact.imie }} {{ contact.nazwisko }}
+                </p>
+            </div>
+
+            <!-- Form -->
+            <form method="post" class="space-y-6">
+                <!-- Imię -->
+                <div>
+                    <label for="imie" class="block text-sm font-medium text-gray-700">
+                        Imię
+                    </label>
+                    <div class="mt-1">
+                        <input 
+                            type="text" 
+                            id="imie" 
+                            name="imie" 
+                            value="{{ imie or contact.imie }}"
+                            placeholder="Wprowadź imię"
+                            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            required
+                        >
+                    </div>
+                    {% if errors and errors.imie %}
+                        <p class="mt-2 text-sm text-red-600">{{ errors.imie }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Nazwisko -->
+                <div>
+                    <label for="nazwisko" class="block text-sm font-medium text-gray-700">
+                        Nazwisko
+                    </label>
+                    <div class="mt-1">
+                        <input 
+                            type="text" 
+                            id="nazwisko" 
+                            name="nazwisko" 
+                            value="{{ nazwisko or contact.nazwisko }}"
+                            placeholder="Wprowadź nazwisko"
+                            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            required
+                        >
+                    </div>
+                    {% if errors and errors.nazwisko %}
+                        <p class="mt-2 text-sm text-red-600">{{ errors.nazwisko }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Numer wewnętrzny -->
+                <div>
+                    <label for="numer_wewnetrzny" class="block text-sm font-medium text-gray-700">
+                        Numer wewnętrzny
+                    </label>
+                    <div class="mt-1">
+                        <input 
+                            type="text" 
+                            id="numer_wewnetrzny" 
+                            name="numer_wewnetrzny" 
+                            value="{{ numer_wewnetrzny or contact.numer_wewnetrzny }}"
+                            placeholder="np. 451"
+                            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md {% if errors and errors.numer_wewnetrzny %}border-red-300{% endif %}"
+                            required
+                        >
+                    </div>
+                    <p class="mt-1 text-sm text-gray-500">
+                        Wymagane. Numer wewnętrzny firmy.
+                    </p>
+                    {% if errors and errors.numer_wewnetrzny %}
+                        <p class="mt-2 text-sm text-red-600">{{ errors.numer_wewnetrzny }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Dział -->
+                <div>
+                    <label for="dzial" class="block text-sm font-medium text-gray-700">
+                        Dział
+                    </label>
+                    <div class="mt-1">
+                        <input 
+                            type="text" 
+                            id="dzial" 
+                            name="dzial" 
+                            value="{{ dzial or contact.dzial or '' }}"
+                            placeholder="Nazwa działu"
+                            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                        >
+                    </div>
+                    {% if errors and errors.dzial %}
+                        <p class="mt-2 text-sm text-red-600">{{ errors.dzial }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Firma -->
+                <div>
+                    <label for="firma" class="block text-sm font-medium text-gray-700">
+                        Firma
+                    </label>
+                    <div class="mt-1">
+                        <input 
+                            type="text" 
+                            id="firma" 
+                            name="firma" 
+                            value="{{ firma or contact.firma or '' }}"
+                            placeholder="Nazwa firmy"
+                            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                        >
+                    </div>
+                    {% if errors and errors.firma %}
+                        <p class="mt-2 text-sm text-red-600">{{ errors.firma }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Notatki -->
+                <div>
+                    <label for="notatki" class="block text-sm font-medium text-gray-700">
+                        Notatki
+                    </label>
+                    <div class="mt-1">
+                        <textarea 
+                            id="notatki" 
+                            name="notatki" 
+                            rows="3"
+                            placeholder="Dodatkowe informacje"
+                            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                        >{{ notatki or contact.notatki or '' }}</textarea>
+                    </div>
+                    {% if errors and errors.notatki %}
+                        <p class="mt-2 text-sm text-red-600">{{ errors.notatki }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex items-center justify-end space-x-3 pt-6 border-t border-gray-200">
+                    <a 
+                        href="/kontakty/{{ contact.id }}" 
+                        class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    >
+                        Anuluj
+                    </a>
+                    <button 
+                        type="submit" 
+                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    >
+                        <i class="fas fa-save mr-2"></i>
+                        Zapisz zmiany
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Focus na pierwszym polu
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('imie').focus();
+    });
+    
+    // Walidacja po stronie klienta
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const numerWewnetrzny = document.getElementById('numer_wewnetrzny').value.trim();
+        
+        if (!numerWewnetrzny) {
+            e.preventDefault();
+            alert('Numer wewnętrzny jest wymagany');
+            document.getElementById('numer_wewnetrzny').focus();
+            return false;
+        }
+    });
+</script>
+{% endblock %}

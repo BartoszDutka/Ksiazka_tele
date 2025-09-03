@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="px-4 sm:px-0">
+    <div class="bg-white shadow rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">
+                <i class="fas fa-address-book mr-2 text-blue-600"></i>
+                Książka Telefoniczna
+            </h1>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Funkcjonalności</h2>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-center">
+                            <i class="fas fa-search mr-2 text-blue-500"></i>
+                            Wyszukiwanie kontaktów
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-filter mr-2 text-blue-500"></i>
+                            Filtrowanie po dziale
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-sort mr-2 text-blue-500"></i>
+                            Sortowanie wyników
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-users mr-2 text-blue-500"></i>
+                            Zarządzanie kontaktami
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Szybkie akcje</h2>
+                    <div class="space-y-3">
+                        <a href="/kontakty" class="block w-full bg-blue-600 text-white text-center py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200">
+                            <i class="fas fa-list mr-2"></i>
+                            Przeglądaj kontakty
+                        </a>
+                        
+                        {% if user %}
+                            <a href="/kontakty/nowy" class="block w-full bg-green-600 text-white text-center py-2 px-4 rounded-md hover:bg-green-700 transition duration-200">
+                                <i class="fas fa-plus mr-2"></i>
+                                Dodaj nowy kontakt
+                            </a>
+                        {% else %}
+                            <a href="/logowanie" class="block w-full bg-gray-600 text-white text-center py-2 px-4 rounded-md hover:bg-gray-700 transition duration-200">
+                                <i class="fas fa-sign-in-alt mr-2"></i>
+                                Zaloguj się
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                    <div class="p-4">
+                        <div class="text-2xl font-bold text-blue-600">{{ total_contacts or 0 }}</div>
+                        <div class="text-sm text-gray-500">Kontaktów w bazie</div>
+                    </div>
+                    <div class="p-4">
+                        <div class="text-2xl font-bold text-green-600">{{ total_departments or 0 }}</div>
+                        <div class="text-sm text-gray-500">Działów</div>
+                    </div>
+                    <div class="p-4">
+                        <div class="text-2xl font-bold text-purple-600">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="text-sm text-gray-500">Numery wewnętrzne</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

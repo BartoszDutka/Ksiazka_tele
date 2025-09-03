@@ -1,0 +1,112 @@
+================================================================================
+🎯 CEL PROJEKTU
+================================================================================
+
+Cel: Stworzenie Książki Telefonicznej dostępnej pod przyjaznym adresem:
+http://igrabka.ksiazka-tel.pl
+
+Zamiast zapamiętywania trudnego adresu IP:
+http://192.168.102.174
+
+================================================================================
+❌ PROBLEM KTÓRY WYSTĄPIŁ
+================================================================================
+
+Co się dzieje:
+1. ✅ Aplikacja działa - jest uruchomiona na 192.168.102.174:80
+2. ✅ Adres IP działa - http://192.168.102.174 otwiera aplikację
+3. ❌ Nazwa domeny NIE działa - http://igrabka.ksiazka-tel.pl daje błąd DNS_PROBE_FINISHED_NXDOMAIN
+
+Dlaczego nie działa:
+nslookup igrabka.ksiazka-tel.pl
+*** DC2.igrabka.instytut can't find igrabka.ksiazka-tel.pl: Non-existent domain
+
+Serwer DNS DC2.igrabka.instytut (192.168.100.9) NIE ZNA domeny igrabka.ksiazka-tel.pl
+
+================================================================================
+🔍 ANALIZA PROBLEMU
+================================================================================
+
+Co POWINNO się stać:
+1. Wpisujesz igrabka.ksiazka-tel.pl w przeglądarce
+2. Komputer pyta DNS: "Jaki IP ma ta domena?"
+3. DNS odpowiada: "192.168.102.174"
+4. Przeglądarka łączy się z aplikacją
+
+Co się dzieje TERAZ:
+1. Wpisujesz igrabka.ksiazka-tel.pl w przeglądarce
+2. Komputer pyta DNS: "Jaki IP ma ta domena?"
+3. DNS odpowiada: "Nie znam takiej domeny!" ❌
+4. Przeglądarka pokazuje błąd NXDOMAIN
+
+================================================================================
+💡 ROZWIĄZANIA
+================================================================================
+
+🚀 OPCJA 1: SZYBKA (plik hosts)
+Na każdym komputerze dodaj do pliku C:\Windows\System32\drivers\etc\hosts:
+
+192.168.102.174   igrabka.ksiazka-tel.pl
+
+Plusy: ✅ Działa od razu
+Minusy: ❌ Musisz skonfigurować każdy komputer osobno
+
+--------------------------------------------------------------------------------
+
+🏢 OPCJA 2: PROFESJONALNA (DNS firmowy)
+Administrator IT dodaje na serwerze DC2.igrabka.instytut:
+- Rekord A: igrabka.ksiazka-tel.pl → 192.168.102.174
+
+Plusy: ✅ Działa na wszystkich komputerach automatycznie
+Minusy: ❌ Wymaga uprawnień administratora DNS
+
+--------------------------------------------------------------------------------
+
+🎯 OPCJA 3: NAJPROTSZA (tylko IP)
+Wszyscy używają adresu: http://192.168.102.174
+
+Plusy: ✅ Działa zawsze, bez konfiguracji
+Minusy: ❌ Trudniejszy do zapamiętania
+
+================================================================================
+🤔 REKOMENDACJA
+================================================================================
+
+Dla Twojej sytuacji (firma z DNS serwerem) najlepsze byłoby:
+
+1. KRÓTKOTERMINOWO: Użyj adresu IP http://192.168.102.174
+2. DŁUGOTERMINOWO: Poproś administratora IT o dodanie rekordu DNS
+
+================================================================================
+📋 INSTRUKCJE KROK PO KROK
+================================================================================
+
+ROZWIĄZANIE 1 - PLIK HOSTS (dla każdego komputera):
+
+1. Uruchom Notatnik jako Administrator
+2. Otwórz plik: C:\Windows\System32\drivers\etc\hosts
+3. Na końcu pliku dodaj linię:
+   192.168.102.174   igrabka.ksiazka-tel.pl
+4. Zapisz plik
+5. Otwórz przeglądarkę i wejdź na: http://igrabka.ksiazka-tel.pl
+
+--------------------------------------------------------------------------------
+
+ROZWIĄZANIE 2 - DNS FIRMOWY (dla administratora):
+
+1. Otwórz DNS Manager na serwerze DC2.igrabka.instytut
+2. Znajdź strefę DNS (prawdopodobnie igrabka.instytut)
+3. Dodaj nowy rekord A:
+   - Name: igrabka.ksiazka-tel
+   - IP Address: 192.168.102.174
+4. Zapisz zmiany
+5. Sprawdź: nslookup igrabka.ksiazka-tel.pl
+
+--------------------------------------------------------------------------------
+
+ROZWIĄZANIE 3 - TYLKO IP (najproste):
+
+Podaj wszystkim adres: http://192.168.102.174
+Stwórz skróty na pulpitach z tym adresem.
+
+================================================================================

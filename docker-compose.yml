@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "80:80"
+    environment:
+      - ADMIN_EMAIL=admin@firma.pl
+      - ADMIN_PASSWORD=admin123
+      - SECRET_KEY=super_tajny_klucz_sesji_min_32_znaki_dla_bezpieczenstwa
+      - DATABASE_URL=sqlite:///./data/ksiazka_tele.db
+      - DEBUG=True
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
+
+  # Opcjonalnie - można dodać nginx jako reverse proxy
+  # nginx:
+  #   image: nginx:alpine
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf
+  #   depends_on:
+  #     - app
+  #   restart: unless-stopped
