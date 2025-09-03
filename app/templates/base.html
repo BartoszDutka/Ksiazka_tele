@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" class="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,11 @@
     <!-- Favicon -->
         <link rel="icon" type="image/png" href="/static/logo.png">    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
     
     <!-- HTMX -->
     <script src="https://unpkg.com/htmx.org@1.9.6"></script>
@@ -30,11 +35,22 @@
             from { transform: translateY(-10px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
+        
+        /* Dark mode improvements */
+        .dark input:focus {
+            --tw-ring-color: rgb(59 130 246 / 0.5);
+        }
+        .dark select:focus {
+            --tw-ring-color: rgb(59 130 246 / 0.5);
+        }
+        .dark textarea:focus {
+            --tw-ring-color: rgb(59 130 246 / 0.5);
+        }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors">
     <!-- Navigation -->
-    <nav class="bg-blue-600 text-white shadow-lg">
+    <nav class="bg-blue-600 dark:bg-gray-800 text-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
@@ -45,6 +61,17 @@
                 </div>
                 
                 <div class="flex items-center space-x-4">
+                    <!-- Dark mode toggle -->
+                    <button 
+                        id="theme-toggle" 
+                        type="button" 
+                        class="text-gray-300 hover:text-white p-2 rounded-md hover:bg-blue-700 transition-colors"
+                        title="Przełącz tryb ciemny/jasny"
+                    >
+                        <i id="theme-toggle-light-icon" class="fas fa-sun hidden"></i>
+                        <i id="theme-toggle-dark-icon" class="fas fa-moon"></i>
+                    </button>
+                    
                     <a href="/kontakty" class="hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">
                         <i class="fas fa-list mr-1"></i>
                         Kontakty
@@ -88,7 +115,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white mt-12">
+    <footer class="bg-gray-800 dark:bg-gray-950 text-white mt-12">
         <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center">
                 <div class="flex items-center space-x-2">
@@ -123,6 +150,59 @@
                     }, 500);
                 }, 5000);
             });
+        });
+    </script>
+
+    <!-- Dark Mode Toggle Script -->
+    <script>
+        // Dark mode functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+        const html = document.documentElement;
+
+        // Check for saved theme or default to system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+            html.classList.add('dark');
+            darkIcon.classList.add('hidden');
+            lightIcon.classList.remove('hidden');
+        } else {
+            html.classList.remove('dark');
+            darkIcon.classList.remove('hidden');
+            lightIcon.classList.add('hidden');
+        }
+
+        // Toggle theme
+        themeToggle.addEventListener('click', function() {
+            html.classList.toggle('dark');
+            
+            if (html.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+            } else {
+                localStorage.setItem('theme', 'light');
+                darkIcon.classList.remove('hidden');
+                lightIcon.classList.add('hidden');
+            }
+        });
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+            if (!localStorage.getItem('theme')) {
+                if (e.matches) {
+                    html.classList.add('dark');
+                    darkIcon.classList.add('hidden');
+                    lightIcon.classList.remove('hidden');
+                } else {
+                    html.classList.remove('dark');
+                    darkIcon.classList.remove('hidden');
+                    lightIcon.classList.add('hidden');
+                }
+            }
         });
     </script>
 

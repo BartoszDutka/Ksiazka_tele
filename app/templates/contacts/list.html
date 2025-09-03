@@ -5,15 +5,15 @@
     <!-- Header -->
     <div class="sm:flex sm:items-center sm:justify-between mb-6">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">Kontakty</h1>
-            <p class="mt-1 text-sm text-gray-500">
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Kontakty</h1>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
                 Lista wszystkich kontaktów w firmie
                 {% if total_count %}({{ total_count }} {% if total_count == 1 %}kontakt{% elif total_count < 5 %}kontakty{% else %}kontaktów{% endif %}){% endif %}
             </p>
         </div>
         {% if user %}
             <div class="mt-4 sm:mt-0">
-                <a href="/kontakty/nowy" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <a href="/kontakty/nowy" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-700 dark:hover:bg-blue-800">
                     <i class="fas fa-plus mr-2"></i>
                     Nowy kontakt
                 </a>
@@ -22,16 +22,16 @@
     </div>
 
     <!-- Search and Filters -->
-    <div class="bg-white shadow rounded-lg mb-6">
+    <div class="bg-white dark:bg-gray-800 shadow rounded-lg mb-6">
         <div class="px-4 py-5 sm:p-6">
             <form method="get" id="search-form" class="space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <!-- Search -->
                     <div class="md:col-span-2">
-                        <label for="search" class="block text-sm font-medium text-gray-700">Szukaj</label>
+                        <label for="search" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Szukaj</label>
                         <div class="mt-1 relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-search text-gray-400"></i>
+                                <i class="fas fa-search text-gray-400 dark:text-gray-500"></i>
                             </div>
                             <input 
                                 type="text" 
@@ -39,7 +39,7 @@
                                 name="q" 
                                 value="{{ q }}"
                                 placeholder="Szukaj po imieniu/nazwie, nazwisku, dziale, numerze..."
-                                class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                class="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md leading-5 bg-white dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                 hx-get="/kontakty"
                                 hx-trigger="keyup changed delay:400ms, search"
                                 hx-target="#contacts-list"
@@ -52,11 +52,11 @@
                     
                     <!-- Department Filter -->
                     <div>
-                        <label for="dzial" class="block text-sm font-medium text-gray-700">Dział</label>
+                        <label for="dzial" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Dział</label>
                         <select 
                             id="dzial" 
                             name="dzial" 
-                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
                             hx-get="/kontakty"
                             hx-trigger="change"
                             hx-target="#contacts-list"
@@ -74,11 +74,11 @@
                 
                 <!-- Sort Options -->
                 <div class="flex flex-wrap items-center gap-4">
-                    <span class="text-sm font-medium text-gray-700">Sortuj:</span>
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Sortuj:</span>
                     <div class="flex flex-wrap gap-2">
                         <select 
                             name="sort" 
-                            class="text-sm border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            class="text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-white rounded-md px-3 py-1 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             hx-get="/kontakty"
                             hx-trigger="change"
                             hx-target="#contacts-list"
@@ -96,7 +96,7 @@
                     <!-- Loading indicator -->
                     <div class="htmx-indicator">
                         <i class="fas fa-spinner fa-spin text-blue-500"></i>
-                        <span class="text-sm text-gray-500 ml-1">Ładowanie...</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400 ml-1">Ładowanie...</span>
                     </div>
                 </div>
             </form>
