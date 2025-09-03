@@ -98,8 +98,33 @@ async def contacts_list(
     dzialy = [d for d in session.exec(dzialy_query).all() if d]
     dzialy.sort()
     
+    # Sprawdź czy to żądanie HTMX
+    is_htmx = request.headers.get("HX-Request") == "true"
+    
     # Sprawdź czy użytkownik jest zalogowany
     user = get_current_user(request)
+    
+    # Dla żądań HTMX zwróć tylko partial template
+    if is_htmx:
+        return templates.TemplateResponse(
+            "contacts/list_partial.html",
+            {
+                "request": request,
+                "contacts": contacts,
+                "user": user,
+                "q": q or "",
+                "dzial": dzial,
+                "sort": sort,
+                "page": page,
+                "total_pages": total_pages,
+                "total_count": total_count,
+                "dzialy": dzialy,
+                "has_prev": page > 1,
+                "has_next": page < total_pages,
+                "prev_page": page - 1 if page > 1 else None,
+                "next_page": page + 1 if page < total_pages else None
+            }
+        )
     
     return templates.TemplateResponse(
         "contacts/list.html",

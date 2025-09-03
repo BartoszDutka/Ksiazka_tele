@@ -98,12 +98,18 @@
                 <div class="flex-1 flex justify-between sm:hidden">
                     {% if has_prev %}
                         <a href="?{% for key, value in request.query_params.items() %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ prev_page }}" 
+                           hx-get="?{% for key, value in request.query_params.items() %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ prev_page }}"
+                           hx-target="#contacts-list"
+                           hx-swap="innerHTML"
                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                             Poprzednia
                         </a>
                     {% endif %}
                     {% if has_next %}
                         <a href="?{% for key, value in request.query_params.items() %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ next_page }}" 
+                           hx-get="?{% for key, value in request.query_params.items() %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ next_page }}"
+                           hx-target="#contacts-list"
+                           hx-swap="innerHTML"
                            class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                             Następna
                         </a>
@@ -120,6 +126,9 @@
                         <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
                             {% if has_prev %}
                                 <a href="?{% for key, value in request.query_params.items() %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ prev_page }}" 
+                                   hx-get="?{% for key, value in request.query_params.items() %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ prev_page }}"
+                                   hx-target="#contacts-list"
+                                   hx-swap="innerHTML"
                                    class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                     <i class="fas fa-chevron-left"></i>
                                 </a>
@@ -132,6 +141,9 @@
                                     </span>
                                 {% elif p <= 3 or p > total_pages - 3 or (p >= page - 1 and p <= page + 1) %}
                                     <a href="?{% for key, value in request.query_params.items() %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ p }}" 
+                                       hx-get="?{% for key, value in request.query_params.items() %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ p }}"
+                                       hx-target="#contacts-list"
+                                       hx-swap="innerHTML"
                                        class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
                                         {{ p }}
                                     </a>
@@ -148,6 +160,9 @@
                             
                             {% if has_next %}
                                 <a href="?{% for key, value in request.query_params.items() %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ next_page }}" 
+                                   hx-get="?{% for key, value in request.query_params.items() %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ next_page }}"
+                                   hx-target="#contacts-list"
+                                   hx-swap="innerHTML"
                                    class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                     <i class="fas fa-chevron-right"></i>
                                 </a>

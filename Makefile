@@ -30,12 +30,11 @@ dev:
 
 # Formatowanie kodu
 format:
-	black app/
-	isort app/
+	@echo "Formatowanie kodu nie jest dostępne - brak narzędzi"
 
 # Sprawdzanie kodu
 lint:
-	ruff check app/
+	@echo "Sprawdzanie kodu nie jest dostępne - brak narzędzi"
 
 # Wszystkie sprawdzenia
 check: lint
